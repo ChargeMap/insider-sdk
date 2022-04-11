@@ -10,6 +10,7 @@ use Chargemap\InsiderSdk\InsiderApiException;
 use Chargemap\InsiderSdk\Users\UpdateIdentifiers\UpdateUserIdentifiersRequest;
 use Chargemap\InsiderSdk\Users\UpdateIdentifiers\UpdateUserIdentifiersService;
 use Chargemap\InsiderSdk\Users\Upsert\UpsertUsersDataRequest;
+use Chargemap\InsiderSdk\Users\Upsert\UpsertUsersDataResponse;
 use Chargemap\InsiderSdk\Users\Upsert\UpsertUsersDataService;
 
 class UsersFeatures extends InsiderAbstractFeatures
@@ -20,13 +21,13 @@ class UsersFeatures extends InsiderAbstractFeatures
      * @throws InsiderApiException
      * @throws InsiderApiClientException
      */
-    public function upsert(UpsertUsersDataRequest $request): void
+    public function upsert(UpsertUsersDataRequest $request): UpsertUsersDataResponse
     {
         if ($this->upsertUsersDataService === null) {
             $this->upsertUsersDataService = new UpsertUsersDataService($this->configuration);
         }
 
-        $this->upsertUsersDataService->handle($request);
+        return $this->upsertUsersDataService->handle($request);
     }
 
     private ?UpdateUserIdentifiersService $updateUserIdentifiersService = null;

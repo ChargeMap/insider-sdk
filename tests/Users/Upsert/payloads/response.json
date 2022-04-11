@@ -1,0 +1,15 @@
+{
+  "data": {
+    "successful": {
+      "count" : 123
+    },
+    "fail": {
+      "count": 1,
+      "errors": {
+        "users.0.identifiers.value[*].regexp(^\\+[1-9]\\d{5,15}$)": [
+          "invalid phone number: 11111111"
+        ]
+      }
+    }
+  }
+}

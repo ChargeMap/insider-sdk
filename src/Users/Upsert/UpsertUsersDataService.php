@@ -14,9 +14,11 @@ class UpsertUsersDataService extends InsiderAbstractFeatures
      * @throws InsiderApiException
      * @throws InsiderApiClientException
      */
-    public function handle(UpsertUsersDataRequest $request): void
+    public function handle(UpsertUsersDataRequest $request): UpsertUsersDataResponse
     {
         $requestInterface = $request->getRequestInterface($this->requestFactory, $this->streamFactory);
-        $this->sendRequest($requestInterface);
+        $responseInterface = $this->sendRequest($requestInterface);
+        $json = self::asJson($responseInterface);
+        return UpsertUsersDataResponseFactory::fromJson($json);
     }
 }
