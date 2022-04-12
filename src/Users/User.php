@@ -10,6 +10,8 @@ class User implements JsonSerializable
 {
     private UserIdentifiers $identifiers;
     private ?Attributes $attributes;
+    /** @var Event[]|null */
+    private ?array $events = null;
 
     public function __construct(UserIdentifiers $identifiers, ?Attributes $attributes = null)
     {
@@ -27,6 +29,23 @@ class User implements JsonSerializable
         return $this->attributes;
     }
 
+    public function withEvent(Event $event): self
+    {
+        if (empty($this->events)) {
+            $this->events = [];
+        }
+        $this->events[] = $event;
+        return $this;
+    }
+
+    /**
+     * @return Event[]|null
+     */
+    public function getEvents(): ?array
+    {
+        return $this->events;
+    }
+
     public function jsonSerialize(): array
     {
         $return = [
@@ -34,6 +53,9 @@ class User implements JsonSerializable
         ];
         if ($this->attributes !== null) {
             $return['attributes'] = $this->attributes;
+        }
+        if (!empty($this->events)) {
+            $return['events'] = $this->events;
         }
         return $return;
     }
