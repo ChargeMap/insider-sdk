@@ -39,9 +39,9 @@ class InsiderAbstractFeatures
      * @throws InsiderApiException
      * @throws InsiderApiClientException
      */
-    public function sendRequest(RequestInterface $request): ResponseInterface
+    public function sendRequest(RequestInterface $request, InsiderApiHostType $hostType): ResponseInterface
     {
-        $host = $this->configuration->getHost();
+        $host = $this->configuration->getHosts()[$hostType->getValue()];
 
         // Forge URI
         $URI = $request->getUri();
