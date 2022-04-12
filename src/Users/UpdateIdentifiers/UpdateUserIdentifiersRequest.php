@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Chargemap\InsiderSdk\Users\UpdateIdentifiers;
 
+use Chargemap\InsiderSdk\InsiderApiHostType;
+use Chargemap\InsiderSdk\InsiderApiRequest;
 use Chargemap\InsiderSdk\Users\UserIdentifiers;
 use JsonSerializable;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 
-class UpdateUserIdentifiersRequest implements JsonSerializable
+class UpdateUserIdentifiersRequest implements InsiderApiRequest, JsonSerializable
 {
     private UserIdentifiers $oldIdentifiers;
     private UserIdentifiers $newIdentifiers;
@@ -44,5 +46,10 @@ class UpdateUserIdentifiersRequest implements JsonSerializable
             'old_identifier' => $this->oldIdentifiers,
             'new_identifier' => $this->newIdentifiers,
         ];
+    }
+
+    public function getHostType(): InsiderApiHostType
+    {
+        return InsiderApiHostType::UNIFICATION();
     }
 }

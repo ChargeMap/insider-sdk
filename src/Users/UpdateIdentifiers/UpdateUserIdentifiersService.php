@@ -17,6 +17,6 @@ class UpdateUserIdentifiersService extends InsiderAbstractFeatures
     public function handle(UpdateUserIdentifiersRequest $request): void
     {
         $requestInterface = $request->getRequestInterface($this->requestFactory, $this->streamFactory);
-        $this->sendRequest($requestInterface);
+        $this->sendRequest($requestInterface, $request->getHostType());
     }
 }
