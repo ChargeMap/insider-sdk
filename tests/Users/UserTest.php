@@ -6,6 +6,7 @@ namespace Tests\Chargemap\InsiderSdk\Users;
 
 use Chargemap\InsiderSdk\InsiderApiClientException;
 use Chargemap\InsiderSdk\Users\Attributes;
+use Chargemap\InsiderSdk\Users\Event;
 use Chargemap\InsiderSdk\Users\User;
 use Chargemap\InsiderSdk\Users\UserIdentifiers;
 use DateTime;
@@ -24,6 +25,18 @@ class UserTest extends TestCase
 
         $this->assertSame($identifiers, $user->getIdentifiers());
         $this->assertSame($attributes, $user->getAttributes());
+        $this->assertNull($user->getEvents());
+
+        $events = [
+            $this->getEvent(),
+            $this->getEvent()
+        ];
+
+        foreach ($events as $event) {
+            $user = $user->withEvent($event);
+        }
+
+        $this->assertSame($events, $user->getEvents());
     }
 
     /**
@@ -59,12 +72,18 @@ class UserTest extends TestCase
         foreach (['key' => 'value', 'key2' => 'value2'] as $key => $value) {
             $attributes = $attributes->withCustomAttribute($key, $value);
         }
-
         $user = new User($identifiers, $attributes);
+
+        $events = [$this->getEvent(), $this->getEvent()];
+
+        foreach ($events as $event) {
+            $user = $user->withEvent($event);
+        }
 
         $this->assertSame(json_encode([
             'identifiers' => $identifiers,
-            'attributes' => $attributes
+            'attributes' => $attributes,
+            'events' => $events,
         ]), json_encode($user));
     }
 
@@ -86,5 +105,10 @@ class UserTest extends TestCase
         $this->assertSame(json_encode([
             'identifiers' => $identifiers,
         ]), json_encode($user));
+    }
+
+    public function getEvent(): Event
+    {
+        return (new Event('event_name', new DateTime()));
     }
 }

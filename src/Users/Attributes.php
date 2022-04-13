@@ -23,23 +23,23 @@ class Attributes implements JsonSerializable
     private ?string $country;
     private ?string $city;
     /** @var int[]|null */
-    private ?array $listId;
+    private ?array $listId = null;
     /** @var array<string, mixed>|null */
-    private ?array $custom;
+    private ?array $custom = null;
 
     public function __construct(
-        ?string            $email,
-        ?string            $phoneNumber,
-        ?bool              $emailOptin,
-        ?bool              $gdrOptin,
-        ?bool              $smsOptin,
-        ?string            $name,
-        ?string            $surname,
-        ?DateTimeInterface $birthday,
-        ?string            $gender,
-        ?string            $language,
-        ?string            $country,
-        ?string            $city
+        ?string            $email = null,
+        ?string            $phoneNumber = null,
+        ?bool              $emailOptin = null,
+        ?bool              $gdrOptin = null,
+        ?bool              $smsOptin = null,
+        ?string            $name = null,
+        ?string            $surname = null,
+        ?DateTimeInterface $birthday = null,
+        ?string            $gender = null,
+        ?string            $language = null,
+        ?string            $country = null,
+        ?string            $city = null
     )
     {
         $this->email = $email;
