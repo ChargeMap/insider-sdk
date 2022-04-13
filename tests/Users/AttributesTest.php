@@ -27,10 +27,6 @@ class AttributesTest extends TestCase
         $language = 'EN';
         $country = 'UK';
         $city = 'London';
-        $listId = [1, 2, 3];
-        $custom = [
-            'key' => 'value'
-        ];
         $attributes = new Attributes(
             $email,
             $phoneNumber,
@@ -45,12 +41,6 @@ class AttributesTest extends TestCase
             $country,
             $city,
         );
-        foreach ($listId as $i) {
-            $attributes = $attributes->withListId($i);
-        }
-        foreach ($custom as $key => $value) {
-            $attributes = $attributes->withCustomAttribute($key, $value);
-        }
         $this->assertSame($email, $attributes->getEmail());
         $this->assertSame($phoneNumber, $attributes->getPhoneNumber());
         $this->assertSame($emailOptin, $attributes->getEmailOptin());
@@ -63,6 +53,19 @@ class AttributesTest extends TestCase
         $this->assertSame($language, $attributes->getLanguage());
         $this->assertSame($country, $attributes->getCountry());
         $this->assertSame($city, $attributes->getCity());
+        $this->assertNull($attributes->getListId());
+        $this->assertNull($attributes->getCustom());
+        $listId = [1, 2, 3];
+        $custom = [
+            'key' => 'value'
+        ];
+        foreach ($listId as $i) {
+            $attributes = $attributes->withListId($i);
+        }
+        foreach ($custom as $key => $value) {
+            $attributes = $attributes->withCustomAttribute($key, $value);
+        }
+
         $this->assertSame($listId, $attributes->getListId());
         $this->assertSame($custom, $attributes->getCustom());
     }
