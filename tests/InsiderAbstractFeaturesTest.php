@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Tests\Chargemap\InsiderSdk;
 
 use Chargemap\InsiderSdk\InsiderAbstractFeatures;
+use Chargemap\InsiderSdk\InsiderApiClient;
 use Chargemap\InsiderSdk\InsiderApiClientException;
 use Chargemap\InsiderSdk\InsiderApiConfiguration;
 use Chargemap\InsiderSdk\InsiderApiErrorCode;
 use Chargemap\InsiderSdk\InsiderApiException;
 use Chargemap\InsiderSdk\InsiderApiHost;
 use Chargemap\InsiderSdk\InsiderApiHostType;
+use Exception;
 use Http\Discovery\Psr17FactoryDiscovery;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -59,23 +61,30 @@ class InsiderAbstractFeaturesTest extends TestCase
     public function sendRequestThrowsIfHostIsMissingProvider(): iterable
     {
         foreach(InsiderApiHostType::values() as $case) {
-            yield [$case];
+            yield [$case, InsiderApiClient::class, "Missing host in configuration for type : $case"];
         }
     }
 
     /**
      * @dataProvider sendRequestThrowsIfHostIsMissingProvider
-     * @throws InsiderApiClientException
-     * @throws InsiderApiException
      */
-    public function testSendRequestThrowsIfHostIsMissing(InsiderApiHostType $hostType): void
+    public function testSendRequestThrowsIfHostIsMissing(InsiderApiHostType $hostType, string $exceptionType, $exceptionMessage): void
     {
         $configuration = InsiderApiConfiguration::builder()->build();
         $abstractFeatures = new InsiderAbstractFeatures($configuration);
         $request = Psr17FactoryDiscovery::findRequestFactory()->createRequest('POST', '');
 
-        $abstractFeatures->sendRequest($request, $hostType);
-        $this->expectExceptionObject(new InsiderApiClientException("Missing host in configuration for type : $hostType"));
+        $exception = null;
+
+        try {
+            $abstractFeatures->sendRequest($request, $hostType);
+        } catch(Exception $e) {
+            $exception = $e;
+        }
+
+        $this->assertTrue($exception !== null);
+        $this->assertEquals($exceptionType, get_class($exception));
+        $this->assertEquals($exceptionMessage, $exceptionMessage);
     }
 
     public function sendRequestForgesCorrectUnificationUriProvider(): iterable
