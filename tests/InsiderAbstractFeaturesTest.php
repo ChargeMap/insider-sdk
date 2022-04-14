@@ -61,7 +61,7 @@ class InsiderAbstractFeaturesTest extends TestCase
     public function sendRequestThrowsIfHostIsMissingProvider(): iterable
     {
         foreach(InsiderApiHostType::values() as $case) {
-            yield [$case, InsiderApiClient::class, "Missing host in configuration for type : $case"];
+            yield [$case, InsiderApiClientException::class, "Missing host in configuration for type : $case"];
         }
     }
 
