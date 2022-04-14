@@ -70,7 +70,7 @@ class InsiderAbstractFeaturesTest extends TestCase
      */
     public function testSendRequestThrowsIfHostIsMissing(InsiderApiHostType $hostType): void
     {
-        $configuration = InsiderApiConfiguration::builder();
+        $configuration = InsiderApiConfiguration::builder()->build();
         $abstractFeatures = new InsiderAbstractFeatures($configuration);
         $request = Psr17FactoryDiscovery::findRequestFactory()->createRequest('POST', '');
 
