@@ -61,30 +61,23 @@ class InsiderAbstractFeaturesTest extends TestCase
     public function sendRequestThrowsIfHostIsMissingProvider(): iterable
     {
         foreach(InsiderApiHostType::values() as $case) {
-            yield [$case, InsiderApiClientException::class, "Missing host in configuration for type : $case"];
+            yield [$case];
         }
     }
 
     /**
      * @dataProvider sendRequestThrowsIfHostIsMissingProvider
+     * @throws InsiderApiClientException
+     * @throws InsiderApiException
      */
-    public function testSendRequestThrowsIfHostIsMissing(InsiderApiHostType $hostType, string $exceptionType, $exceptionMessage): void
+    public function testSendRequestThrowsIfHostIsMissing(InsiderApiHostType $hostType): void
     {
         $configuration = InsiderApiConfiguration::builder()->build();
         $abstractFeatures = new InsiderAbstractFeatures($configuration);
         $request = Psr17FactoryDiscovery::findRequestFactory()->createRequest('POST', '');
 
-        $exception = null;
-
-        try {
-            $abstractFeatures->sendRequest($request, $hostType);
-        } catch(Exception $e) {
-            $exception = $e;
-        }
-
-        $this->assertTrue($exception !== null);
-        $this->assertEquals($exceptionType, get_class($exception));
-        $this->assertEquals($exceptionMessage, $exceptionMessage);
+        $this->expectExceptionObject(new InsiderApiClientException("Missing host in configuration for type : $hostType"));
+        $abstractFeatures->sendRequest($request, $hostType);
     }
 
     public function sendRequestForgesCorrectUnificationUriProvider(): iterable
