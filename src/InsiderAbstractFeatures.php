@@ -41,7 +41,12 @@ class InsiderAbstractFeatures
      */
     public function sendRequest(RequestInterface $request, InsiderApiHostType $hostType): ResponseInterface
     {
-        $host = $this->configuration->getHosts()[$hostType->getValue()];
+        // Retrieve host
+        $host = $this->configuration->getHosts()[$hostType->getValue()] ?? null;
+
+        if($host === null) {
+            throw new InsiderApiClientException("Missing host in configuration for type : $hostType");
+        }
 
         // Forge URI
         $URI = $request->getUri();
