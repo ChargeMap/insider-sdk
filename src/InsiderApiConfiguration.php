@@ -16,25 +16,21 @@ use Psr\Http\Message\UriFactoryInterface;
  * @method RequestFactoryInterface|null getRequestFactory()
  * @method StreamFactoryInterface|null getStreamFactory()
  * @method UriFactoryInterface|null getUriFactory()
- * @method InsiderApiHost|null getHost()
+ * @method InsiderApiHost[] getHosts()
  */
 class InsiderApiConfiguration
 {
-    private InsiderApiHost $host;
+    /** @var InsiderApiHost[]  */
+    private array $hosts = [];
     protected ClientInterface $httpClient;
     protected RequestFactoryInterface $requestFactory;
     protected StreamFactoryInterface $streamFactory;
     protected UriFactoryInterface $uriFactory;
     protected bool $built = false;
 
-    private function __construct(InsiderApiHost $host)
+    public static function builder(): self
     {
-        $this->host = $host;
-    }
-
-    public static function builder(InsiderApiHost $host): self
-    {
-        return new self($host);
+        return new self();
     }
 
     public function build(): self
@@ -68,9 +64,12 @@ class InsiderApiConfiguration
         return call_user_func_array(array($this, $methodName), $arguments);
     }
 
-    protected function _getHost(): ?InsiderApiHost
+    /**
+     * @return InsiderApiHost[]
+     */
+    protected function _getHosts(): array
     {
-        return $this->host;
+        return $this->hosts;
     }
 
     protected function _getHttpClient(): ?ClientInterface
@@ -93,10 +92,17 @@ class InsiderApiConfiguration
         return $this->uriFactory;
     }
 
-    public function withHost(InsiderApiHost $host): self
+    public function withUnificationHost(InsiderApiHost $unificationHost): self
     {
         $return = clone $this;
-        $return->host = $host;
+        $return->hosts[InsiderApiHostType::UNIFICATION] = $unificationHost;
+        return $return;
+    }
+
+    public function withMobileHost(InsiderApiHost $mobileHost): self
+    {
+        $return = clone $this;
+        $return->hosts[InsiderApiHostType::MOBILE] = $mobileHost;
         return $return;
     }
 
