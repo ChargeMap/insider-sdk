@@ -52,8 +52,14 @@ class SimplePushNotification implements JsonSerializable
 
     public function jsonSerialize(): stdClass
     {
+        $identifiers = [];
+
+        foreach($this->userIdentifiers->jsonSerialize() as $key => $value) {
+            $identifiers["INSIDER.$key"] = $value;
+        }
+
         return (object)[
-            'identifiers' => $this->userIdentifiers->jsonSerialize(),
+            'identifiers' => $identifiers,
             'camp_id' => $this->campaignId, // ID of the campaign that can be used to retrieve the statistics
             'camp_name' => $this->campaignName, // Name of the push notification
             'title' => $this->title,

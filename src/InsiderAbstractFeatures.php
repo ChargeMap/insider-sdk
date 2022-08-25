@@ -44,7 +44,7 @@ class InsiderAbstractFeatures
         // Retrieve host
         $host = $this->configuration->getHosts()[$hostType->getValue()] ?? null;
 
-        if($host === null) {
+        if ($host === null) {
             throw new InsiderApiClientException("Missing host in configuration for type : $hostType");
         }
 
@@ -55,15 +55,16 @@ class InsiderAbstractFeatures
         $path = DIRECTORY_SEPARATOR . $host->getPath() . DIRECTORY_SEPARATOR . $URI->getPath();
         $path = preg_replace('%/+%', '/', $path);
 
-        $URI = $URI->withPath($path)
+        $URI = $URI
+            ->withPath($path)
             ->withScheme($host->getScheme())
             ->withHost($host->getHost());
+
+        $request = $this->addCredentials($request, $hostType, $host);
 
         try {
             $response = $this->httpClient->sendRequest(
                 $request->withUri($URI)
-                    ->withHeader('X-PARTNER-NAME', $host->getPartnerName())
-                    ->withHeader('X-REQUEST-TOKEN', $host->getToken())
             );
         } catch (ClientExceptionInterface $e) {
             throw new InsiderApiClientException($e->getMessage());
@@ -104,5 +105,25 @@ class InsiderAbstractFeatures
         }
 
         return $json;
+    }
+
+    private function addCredentials(RequestInterface $request, InsiderApiHostType $hostType, InsiderApiHost $host): RequestInterface
+    {
+        if ($hostType->equals(InsiderApiHostType::MOBILE())) {
+            $body = json_decode($request->getBody()->__toString());
+            $body->api_key = $host->getToken();
+
+            $request = $request->withBody(
+                $this->configuration->getStreamFactory()->createStream(json_encode($body))
+            );
+        }
+
+        if ($hostType->equals(InsiderApiHostType::UNIFICATION())) {
+            $request = $request
+                ->withHeader('X-PARTNER-NAME', $host->getPartnerName())
+                ->withHeader('X-REQUEST-TOKEN', $host->getToken());
+        }
+
+        return $request;
     }
 }
