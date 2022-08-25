@@ -76,10 +76,10 @@ class SimplePushNotificationTest extends TestCase
 
         $this->assertSame(json_encode([
             'identifiers' => [
-                'uuid' => $userUuid,
-                'email' => $userEmail,
-                'phone_number' => $userPhoneNumber,
-                'custom' => $userCustom
+                'INSIDER.uuid' => $userUuid,
+                'INSIDER.email' => $userEmail,
+                'INSIDER.phone_number' => $userPhoneNumber,
+                'INSIDER.custom' => $userCustom
             ],
             'camp_id' => $campaignId,
             'camp_name' => $campaignName,
