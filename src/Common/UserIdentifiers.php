@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Chargemap\InsiderSdk\Users;
+namespace Chargemap\InsiderSdk\Common;
 
 use Chargemap\InsiderSdk\InsiderApiClientException;
 use JsonSerializable;

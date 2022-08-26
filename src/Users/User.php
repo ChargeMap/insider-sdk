@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Chargemap\InsiderSdk\Users;
 
+use Chargemap\InsiderSdk\Common\UserIdentifiers;
 use JsonSerializable;
 
 class User implements JsonSerializable
