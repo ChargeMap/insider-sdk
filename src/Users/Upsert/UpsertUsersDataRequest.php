@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Chargemap\InsiderSdk\Users\Upsert;
 
+use Chargemap\InsiderSdk\InsiderApiHostType;
+use Chargemap\InsiderSdk\InsiderApiRequest;
 use Chargemap\InsiderSdk\Users\User;
 use JsonSerializable;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 
-class UpsertUsersDataRequest implements JsonSerializable
+class UpsertUsersDataRequest implements InsiderApiRequest, JsonSerializable
 {
     /** @var User[] */
     private array $users = [];
@@ -50,5 +52,10 @@ class UpsertUsersDataRequest implements JsonSerializable
         return [
             'users' => $this->users
         ];
+    }
+
+    public function getHostType(): InsiderApiHostType
+    {
+        return InsiderApiHostType::UNIFICATION();
     }
 }

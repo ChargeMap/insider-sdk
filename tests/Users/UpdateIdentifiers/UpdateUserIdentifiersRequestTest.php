@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Chargemap\InsiderSdk\Users\UpdateIdentifiers;
 
+use Chargemap\InsiderSdk\Common\UserIdentifiers;
 use Chargemap\InsiderSdk\Users\UpdateIdentifiers\UpdateUserIdentifiersRequest;
-use Chargemap\InsiderSdk\Users\UserIdentifiers;
 use Http\Discovery\Psr17FactoryDiscovery;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestFactoryInterface;

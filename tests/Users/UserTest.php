@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Chargemap\InsiderSdk\Users;
 
+use Chargemap\InsiderSdk\Common\UserIdentifiers;
 use Chargemap\InsiderSdk\InsiderApiClientException;
 use Chargemap\InsiderSdk\Users\Attributes;
 use Chargemap\InsiderSdk\Users\Event;
 use Chargemap\InsiderSdk\Users\User;
-use Chargemap\InsiderSdk\Users\UserIdentifiers;
 use DateTime;
 use PHPUnit\Framework\TestCase;
 

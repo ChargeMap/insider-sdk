@@ -22,12 +22,16 @@ class InsiderApiClientTest extends TestCase
             $this->configuration = $this->createMock(InsiderApiConfiguration::class),
         );
     }
-
+    
     public function testReturnsUsersFeaturesWithLazyLoading(): void
     {
         $usersFeatures = $this->client->users();
+        $pushNotificationsFeatures = $this->client->pushNotifications();
+
         $this->assertSame($this->configuration, $usersFeatures->getConfiguration());
+        $this->assertSame($this->configuration, $pushNotificationsFeatures->getConfiguration());
 
         $this->assertSame($usersFeatures, $this->client->users());
+        $this->assertSame($pushNotificationsFeatures, $this->client->pushNotifications());
     }
 }

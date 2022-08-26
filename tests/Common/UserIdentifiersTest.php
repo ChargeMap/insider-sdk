@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Tests\Chargemap\InsiderSdk\Users;
+namespace Tests\Chargemap\InsiderSdk\Common;
 
+use Chargemap\InsiderSdk\Common\UserIdentifiers;
 use Chargemap\InsiderSdk\InsiderApiClientException;
-use Chargemap\InsiderSdk\Users\UserIdentifiers;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Chargemap\InsiderSdk\Users\UserIdentifiers
+ * @covers \Chargemap\InsiderSdk\Common\UserIdentifiers
  */
 class UserIdentifiersTest extends TestCase
 {
