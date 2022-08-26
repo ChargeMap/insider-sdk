@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Tests\Chargemap\InsiderSdk\PushNotifications\SendSimple;
+namespace Tests\Chargemap\InsiderSdk\PushNotifications\Send;
 
 use Chargemap\InsiderSdk\Common\UserIdentifiers;
 use Chargemap\InsiderSdk\InsiderApiClientException;
-use Chargemap\InsiderSdk\PushNotifications\SendSimple\SendSimplePushNotificationRequest;
-use Chargemap\InsiderSdk\PushNotifications\SendSimple\SimplePushNotification;
+use Chargemap\InsiderSdk\PushNotifications\Send\SendPushNotificationRequest;
+use Chargemap\InsiderSdk\PushNotifications\Send\PushNotification;
 use Http\Discovery\Psr17FactoryDiscovery;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 
 /**
- * @covers \Chargemap\InsiderSdk\PushNotifications\SendSimple\SendSimplePushNotificationRequest
+ * @covers \Chargemap\InsiderSdk\PushNotifications\Send\SendPushNotificationRequest
  */
-class SendSimplePushNotificationRequestTest extends TestCase
+class SendPushNotificationRequestTest extends TestCase
 {
     private RequestFactoryInterface $requestFactory;
     private StreamFactoryInterface $streamFactory;
@@ -26,32 +26,17 @@ class SendSimplePushNotificationRequestTest extends TestCase
      */
     public function testConstructorAndGetters(): void
     {
-        $userUuid = '12345';
-        $userEmail = 'example@example.com';
-        $userPhoneNumber = '+3312345678';
-        $userCustom = ['key' => 'value'];
-        $campaignId = 1;
-        $campaignName = 'campaign-name';
-        $notificationTitle = 'notification-title';
-        $notificationMessage = 'notification-message';
+        list(, $notification) = PushNotificationTest::getStub();
 
-        $notification = new SimplePushNotification(
-            new UserIdentifiers($userUuid, $userEmail, $userPhoneNumber, $userCustom),
-            $campaignId,
-            $campaignName,
-            $notificationTitle,
-            $notificationMessage,
-        );
-
-        $request = new SendSimplePushNotificationRequest($notification);
+        $request = new SendPushNotificationRequest($notification);
 
         $this->assertSame($notification, $request->getNotification());
     }
 
     public function testGetRequestInterface(): void
     {
-        $notification = $this->createMock(SimplePushNotification::class);
-        $request = new SendSimplePushNotificationRequest($notification);
+        $notification = $this->createMock(PushNotification::class);
+        $request = new SendPushNotificationRequest($notification);
 
         $requestInterface = $request->getRequestInterface($this->requestFactory, $this->streamFactory);
         $this->assertSame('POST', $requestInterface->getMethod());

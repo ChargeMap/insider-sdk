@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Chargemap\InsiderSdk\PushNotifications\SendSimple;
+namespace Chargemap\InsiderSdk\PushNotifications\Send;
 
 use Chargemap\InsiderSdk\InsiderApiHostType;
 use Chargemap\InsiderSdk\InsiderApiRequest;
@@ -11,16 +11,16 @@ use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 
-class SendSimplePushNotificationRequest implements InsiderApiRequest, JsonSerializable
+class SendPushNotificationRequest implements InsiderApiRequest, JsonSerializable
 {
-    private SimplePushNotification $notification;
+    private PushNotification $notification;
 
-    public function __construct(SimplePushNotification $notification)
+    public function __construct(PushNotification $notification)
     {
         $this->notification = $notification;
     }
 
-    public function getNotification(): SimplePushNotification
+    public function getNotification(): PushNotification
     {
         return $this->notification;
     }
