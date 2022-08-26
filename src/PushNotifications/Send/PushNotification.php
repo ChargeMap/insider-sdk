@@ -33,7 +33,7 @@ class PushNotification implements JsonSerializable
         ?string $deepLink,
         ?int $badgeCount,
         ?PushNotificationAdvancedType $advancedType,
-        array $advancedItems
+        ?array $advancedItems
     )
     {
         $this->userIdentifiers = $userIdentifiers;
