@@ -1,0 +1,122 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Chargemap\InsiderSdk\PushNotifications\Send;
+
+use Chargemap\InsiderSdk\Common\UserIdentifiers;
+use JsonSerializable;
+use stdClass;
+
+class PushNotification implements JsonSerializable
+{
+    private UserIdentifiers $userIdentifiers;
+    private int $campaignId;
+    private string $campaignName;
+    private string $title;
+    private string $message;
+    private ?string $imageUrl;
+    private ?string $deepLink;
+    private ?int $badgeCount;
+
+    public function __construct(
+        UserIdentifiers $userIdentifiers,
+        int $campaignId,
+        string $campaignName,
+        string $title,
+        string $message,
+        ?string $imageUrl,
+        ?string $deepLink,
+        ?int $badgeCount
+    )
+    {
+        $this->userIdentifiers = $userIdentifiers;
+        $this->campaignId = $campaignId;
+        $this->campaignName = $campaignName;
+        $this->title = $title;
+        $this->message = $message;
+        $this->imageUrl = $imageUrl;
+        $this->deepLink = $deepLink;
+        $this->badgeCount = $badgeCount;
+    }
+
+
+    public function getUserIdentifiers(): UserIdentifiers
+    {
+        return $this->userIdentifiers;
+    }
+
+    public function getCampaignId(): int
+    {
+        return $this->campaignId;
+    }
+
+    public function getCampaignName(): string
+    {
+        return $this->campaignName;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function getMessage(): string
+    {
+        return $this->message;
+    }
+
+    public function getImageUrl(): ?string
+    {
+        return $this->imageUrl;
+    }
+
+
+    public function getDeepLink(): ?string
+    {
+        return $this->deepLink;
+    }
+
+
+    public function getBadgeCount(): ?int
+    {
+        return $this->badgeCount;
+    }
+
+    public function jsonSerialize(): stdClass
+    {
+        $identifiers = [];
+
+        foreach ($this->userIdentifiers->jsonSerialize() as $key => $value) {
+            $identifiers["INSIDER.$key"] = $value;
+        }
+
+        $return = [
+            'identifiers' => $identifiers,
+            'camp_id' => $this->campaignId, // ID of the campaign that can be used to retrieve the statistics
+            'camp_name' => $this->campaignName, // Name of the push notification
+            'title' => $this->title,
+            'message' => $this->message,
+            'send_single_user' => false, // Send push notification to multiple devices of the user
+            'ttl' => 1, // 	Expiration time of the push notification in seconds
+            'android' => [
+                'sound' => 'sound_check', // Sound to play when the notification is received
+            ],
+            'ios' => [
+                'sound' => 'sound_check', // Sound to play when the notification is received
+                'badge' => $this->badgeCount ?? 1, // Badge count to display on the app icon
+            ],
+        ];
+
+        if ($this->imageUrl !== null) {
+            $return['image_url'] = $this->imageUrl;
+        }
+
+        if ($this->deepLink !== null) {
+            $return['android']['deep_link']['deep_android'] = $this->deepLink;
+            $return['ios']['deep_link']['deep_ios'] = $this->deepLink;
+        }
+
+        return (object)$return;
+    }
+}

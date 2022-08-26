@@ -7,23 +7,23 @@ namespace Chargemap\InsiderSdk\PushNotifications;
 use Chargemap\InsiderSdk\InsiderAbstractFeatures;
 use Chargemap\InsiderSdk\InsiderApiClientException;
 use Chargemap\InsiderSdk\InsiderApiException;
-use Chargemap\InsiderSdk\PushNotifications\SendSimple\SendSimplePushNotificationRequest;
-use Chargemap\InsiderSdk\PushNotifications\SendSimple\SendSimplePushNotificationService;
+use Chargemap\InsiderSdk\PushNotifications\Send\SendPushNotificationRequest;
+use Chargemap\InsiderSdk\PushNotifications\Send\SendPushNotificationService;
 
 class PushNotificationFeatures extends InsiderAbstractFeatures
 {
-    private ?SendSimplePushNotificationService $sendSimplePushNotificationService = null;
+    private ?SendPushNotificationService $sendPushNotificationService = null;
 
     /**
      * @throws InsiderApiException
      * @throws InsiderApiClientException
      */
-    public function sendSimple(SendSimplePushNotificationRequest $request): void
+    public function sendSimple(SendPushNotificationRequest $request): void
     {
-        if ($this->sendSimplePushNotificationService === null) {
-            $this->sendSimplePushNotificationService = new SendSimplePushNotificationService($this->configuration);
+        if ($this->sendPushNotificationService === null) {
+            $this->sendPushNotificationService = new SendPushNotificationService($this->configuration);
         }
 
-        $this->sendSimplePushNotificationService->handle($request);
+        $this->sendPushNotificationService->handle($request);
     }
 }
