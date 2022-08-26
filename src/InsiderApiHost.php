@@ -10,21 +10,21 @@ class InsiderApiHost
     private string $host;
     private string $path;
     private string $token;
-    private string $partnerName;
+    private ?string $partnerName;
 
     public function __construct(
         string $scheme,
         string $host,
         string $path,
         string $token,
-        string $partnerName
+        ?string $partnerName = null
     )
     {
-        $this->partnerName = $partnerName;
-        $this->token = $token;
-        $this->path = $path;
-        $this->host = $host;
         $this->scheme = $scheme;
+        $this->host = $host;
+        $this->path = $path;
+        $this->token = $token;
+        $this->partnerName = $partnerName;
     }
 
     public function getScheme(): string
@@ -47,7 +47,7 @@ class InsiderApiHost
         return $this->token;
     }
 
-    public function getPartnerName(): string
+    public function getPartnerName(): ?string
     {
         return $this->partnerName;
     }
