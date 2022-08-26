@@ -18,7 +18,7 @@ class PushNotificationFeatures extends InsiderAbstractFeatures
      * @throws InsiderApiException
      * @throws InsiderApiClientException
      */
-    public function sendSimple(SendPushNotificationRequest $request): void
+    public function send(SendPushNotificationRequest $request): void
     {
         if ($this->sendPushNotificationService === null) {
             $this->sendPushNotificationService = new SendPushNotificationService($this->configuration);
