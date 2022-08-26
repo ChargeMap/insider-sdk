@@ -18,6 +18,10 @@ class PushNotification implements JsonSerializable
     private ?string $imageUrl;
     private ?string $deepLink;
     private ?int $badgeCount;
+    private ?PushNotificationAdvancedType $advancedType;
+
+    /** @var PushNotificationAdvancedItem[]|null  */
+    private ?array $advancedItems;
 
     public function __construct(
         UserIdentifiers $userIdentifiers,
@@ -27,7 +31,9 @@ class PushNotification implements JsonSerializable
         string $message,
         ?string $imageUrl,
         ?string $deepLink,
-        ?int $badgeCount
+        ?int $badgeCount,
+        ?PushNotificationAdvancedType $advancedType,
+        array $advancedItems
     )
     {
         $this->userIdentifiers = $userIdentifiers;
@@ -38,8 +44,9 @@ class PushNotification implements JsonSerializable
         $this->imageUrl = $imageUrl;
         $this->deepLink = $deepLink;
         $this->badgeCount = $badgeCount;
+        $this->advancedType = $advancedType;
+        $this->advancedItems = $advancedItems;
     }
-
 
     public function getUserIdentifiers(): UserIdentifiers
     {
@@ -83,6 +90,19 @@ class PushNotification implements JsonSerializable
         return $this->badgeCount;
     }
 
+    public function getAdvancedType(): ?PushNotificationAdvancedType
+    {
+        return $this->advancedType;
+    }
+
+    /**
+     * @return PushNotificationAdvancedItem[]|null
+     */
+    public function getAdvancedItems(): ?array
+    {
+        return $this->advancedItems;
+    }
+
     public function jsonSerialize(): stdClass
     {
         $identifiers = [];
@@ -115,6 +135,13 @@ class PushNotification implements JsonSerializable
         if ($this->deepLink !== null) {
             $return['android']['deep_link']['deep_android'] = $this->deepLink;
             $return['ios']['deep_link']['deep_ios'] = $this->deepLink;
+        }
+
+        if($this->advancedType !== null && $this->advancedItems !== null) {
+            $return['advanced_push_payload'] = [
+                'advanced_push_type' => strtolower($this->advancedType->getValue()),
+                'advanced_push_items' => $this->advancedItems,
+            ];
         }
 
         return (object)$return;

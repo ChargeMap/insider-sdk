@@ -17,6 +17,10 @@ class PushNotificationBuilder
     private ?string $imageUrl = null;
     private ?string $deepLink = null;
     private ?int $badgeCount = null;
+    private ?PushNotificationAdvancedType $advancedType = null;
+
+    /** @var PushNotificationAdvancedItem[]|null */
+    private ?array $advancedItems = null;
 
     public static function builder(): self
     {
@@ -79,6 +83,14 @@ class PushNotificationBuilder
         return $return;
     }
 
+    public function withAdvancedItems(PushNotificationAdvancedType $advancedType, array $advancedItems): self
+    {
+        $return = clone $this;
+        $return->advancedType = $advancedType;
+        $return->advancedItems = $advancedItems;
+        return $return;
+    }
+
     public function build(): PushNotification
     {
         $requiredProperties = [
@@ -95,6 +107,10 @@ class PushNotificationBuilder
             }
         }
 
+        if (($this->advancedType === null) !== (empty($this->advancedItems))) {
+            throw new InvalidArgumentException("Properties 'advancedType' and 'advancedItems' are simultaneously required");
+        }
+
         return new PushNotification(
             $this->userIdentifiers,
             $this->campaignId,
@@ -103,7 +119,9 @@ class PushNotificationBuilder
             $this->message,
             $this->imageUrl,
             $this->deepLink,
-            $this->badgeCount
+            $this->badgeCount,
+            $this->advancedType,
+            $this->advancedItems
         );
     }
 }

@@ -26,28 +26,7 @@ class SendPushNotificationRequestTest extends TestCase
      */
     public function testConstructorAndGetters(): void
     {
-        $userUuid = '12345';
-        $userEmail = 'example@example.com';
-        $userPhoneNumber = '+3312345678';
-        $userCustom = ['key' => 'value'];
-        $campaignId = 1;
-        $campaignName = 'campaign-name';
-        $title = 'notification-title';
-        $message = 'notification-message';
-        $imageUrl = 'https://www.chargemap.com/image.jpg';
-        $deepLink = 'notification-deek-link';
-        $badgeCount = 2;
-
-        $notification = new PushNotification(
-            new UserIdentifiers($userUuid, $userEmail, $userPhoneNumber, $userCustom),
-            $campaignId,
-            $campaignName,
-            $title,
-            $message,
-            $imageUrl,
-            $deepLink,
-            $badgeCount
-        );
+        list(, $notification) = PushNotificationTest::getStub();
 
         $request = new SendPushNotificationRequest($notification);
 
