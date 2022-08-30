@@ -129,14 +129,18 @@ class PushNotificationTest extends TestCase
                 'title' => $data['title'],
                 'message' => $data['message'],
                 'send_single_user' => false,
-                'ttl' => 1,
+                'ttl' => 86400,
+                'check_optin' => true,
                 'android' => [
+                    'thread-id' => 1,
                     'sound' => 'sound_check',
                     'deep_link' => [
                         'deep_android' => $data['deep_link'],
                     ]
                 ],
                 'ios' => [
+                    'thread-id' => 1,
+                    'delivery_silently' => false,
                     'sound' => 'sound_check',
                     'badge' => $data['badge_count'],
                     'deep_link' => [
