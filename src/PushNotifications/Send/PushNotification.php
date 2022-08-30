@@ -118,11 +118,15 @@ class PushNotification implements JsonSerializable
             'title' => $this->title,
             'message' => $this->message,
             'send_single_user' => false, // Send push notification to multiple devices of the user
-            'ttl' => 1, // 	Expiration time of the push notification in seconds
+            'ttl' => 86400, // 	Expiration time of the push notification in seconds
+            'check_optin' => true, // Check if the user has opted in for the push notification
             'android' => [
+                'thread-id' => 1,
                 'sound' => 'sound_check', // Sound to play when the notification is received
             ],
             'ios' => [
+                'thread-id' => 1,
+                'delivery_silently' => false, // If true, the notification does not show up (can be used to execute background tasks remotely).
                 'sound' => 'sound_check', // Sound to play when the notification is received
                 'badge' => $this->badgeCount ?? 1, // Badge count to display on the app icon
             ],
