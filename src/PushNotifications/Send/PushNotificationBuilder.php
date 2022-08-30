@@ -14,6 +14,7 @@ class PushNotificationBuilder
     private ?string $campaignName = null;
     private ?string $title = null;
     private ?string $message = null;
+    private ?int $ttl = null;
     private ?string $imageUrl = null;
     private ?string $deepLink = null;
     private ?int $badgeCount = null;
@@ -59,6 +60,13 @@ class PushNotificationBuilder
     {
         $return = clone $this;
         $return->message = $message;
+        return $return;
+    }
+
+    public function withTtl(?int $ttl): self
+    {
+        $return = clone $this;
+        $return->ttl = $ttl;
         return $return;
     }
 
@@ -117,6 +125,7 @@ class PushNotificationBuilder
             $this->campaignName,
             $this->title,
             $this->message,
+            $this->ttl,
             $this->imageUrl,
             $this->deepLink,
             $this->badgeCount,

@@ -35,6 +35,7 @@ class PushNotificationTest extends TestCase
         TestCase::assertSame($data['camp_name'], $notification->getCampaignName());
         TestCase::assertSame($data['title'], $notification->getTitle());
         TestCase::assertSame($data['message'], $notification->getMessage());
+        TestCase::assertSame($data['ttl'], $notification->getTtl());
         TestCase::assertSame($data['image_url'], $notification->getImageUrl());
         TestCase::assertSame($data['deep_link'], $notification->getDeepLink());
         TestCase::assertSame($data['badge_count'], $notification->getBadgeCount());
@@ -61,6 +62,7 @@ class PushNotificationTest extends TestCase
             'camp_name' => 'campaign-name',
             'title' => 'title',
             'message' => 'message',
+            'ttl' => 129600,
             'image_url' => 'https://www.chargemap.com/image.jpg',
             'deep_link' => 'deep-link',
             'badge_count' => 2,
@@ -87,6 +89,7 @@ class PushNotificationTest extends TestCase
             $data['camp_name'],
             $data['title'],
             $data['message'],
+            $data['ttl'],
             $data['image_url'],
             $data['deep_link'],
             $data['badge_count'],
@@ -129,7 +132,7 @@ class PushNotificationTest extends TestCase
                 'title' => $data['title'],
                 'message' => $data['message'],
                 'send_single_user' => false,
-                'ttl' => 86400,
+                'ttl' => $data['ttl'],
                 'check_optin' => true,
                 'android' => [
                     'thread-id' => 1,
