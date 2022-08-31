@@ -15,7 +15,7 @@ class PushNotification implements JsonSerializable
     private string $campaignName;
     private string $title;
     private string $message;
-    private ?int $ttl;
+    private ?PushNotificationTtl $ttl;
     private ?string $imageUrl;
     private ?string $deepLink;
     private ?int $badgeCount;
@@ -30,7 +30,7 @@ class PushNotification implements JsonSerializable
         string $campaignName,
         string $title,
         string $message,
-        ?int $ttl,
+        ?PushNotificationTtl $ttl,
         ?string $imageUrl,
         ?string $deepLink,
         ?int $badgeCount,
@@ -76,7 +76,7 @@ class PushNotification implements JsonSerializable
         return $this->message;
     }
 
-    public function getTtl(): ?int
+    public function getTtl(): ?PushNotificationTtl
     {
         return $this->ttl;
     }
@@ -125,7 +125,7 @@ class PushNotification implements JsonSerializable
             'title' => $this->title,
             'message' => $this->message,
             'send_single_user' => false, // Send push notification to multiple devices of the user
-            'ttl' => $this->ttl ?? 86400, // Expiration time of the push notification in seconds
+            'ttl' => ($this->ttl ?? PushNotificationTtl::ONE_DAY())->getValue(), // Expiration time of the push notification in seconds
             'check_optin' => true, // Check if the user has opted in for the push notification
             'android' => [
                 'thread-id' => 1,
