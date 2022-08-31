@@ -41,6 +41,7 @@ class PushNotificationBuilderTest extends TestCase
             ->withCampaignName($data['camp_name'])
             ->withTitle($data['title'])
             ->withMessage($data['message'])
+            ->withTtl($data['ttl'])
             ->withImageUrl($data['image_url'])
             ->withDeepLink($data['deep_link'])
             ->withBadgeCount($data['badge_count'])
@@ -66,6 +67,7 @@ class PushNotificationBuilderTest extends TestCase
         TestCase::assertSame($data['camp_name'], $notification->getCampaignName());
         TestCase::assertSame($data['title'], $notification->getTitle());
         TestCase::assertSame($data['message'], $notification->getMessage());
+        TestCase::assertSame($data['ttl'], $notification->getTtl());
         TestCase::assertSame($data['image_url'], $notification->getImageUrl());
         TestCase::assertSame($data['deep_link'], $notification->getDeepLink());
         TestCase::assertSame($data['badge_count'], $notification->getBadgeCount());

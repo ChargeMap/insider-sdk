@@ -9,6 +9,7 @@ use Chargemap\InsiderSdk\InsiderApiClientException;
 use Chargemap\InsiderSdk\PushNotifications\Send\PushNotification;
 use Chargemap\InsiderSdk\PushNotifications\Send\PushNotificationAdvancedItem;
 use Chargemap\InsiderSdk\PushNotifications\Send\PushNotificationAdvancedType;
+use Chargemap\InsiderSdk\PushNotifications\Send\PushNotificationTtl;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -62,7 +63,7 @@ class PushNotificationTest extends TestCase
             'camp_name' => 'campaign-name',
             'title' => 'title',
             'message' => 'message',
-            'ttl' => 129600,
+            'ttl' => PushNotificationTtl::ONE_AND_A_HALF_DAY(),
             'image_url' => 'https://www.chargemap.com/image.jpg',
             'deep_link' => 'deep-link',
             'badge_count' => 2,
@@ -132,7 +133,7 @@ class PushNotificationTest extends TestCase
                 'title' => $data['title'],
                 'message' => $data['message'],
                 'send_single_user' => false,
-                'ttl' => $data['ttl'],
+                'ttl' => $data['ttl']->getValue(),
                 'check_optin' => true,
                 'android' => [
                     'thread-id' => 1,
