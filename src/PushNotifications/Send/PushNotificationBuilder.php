@@ -19,6 +19,7 @@ class PushNotificationBuilder
     private ?string $deepLink = null;
     private ?int $badgeCount = null;
     private ?PushNotificationAdvancedType $advancedType = null;
+    private ?array $customDeepLinks = null;
 
     /** @var PushNotificationAdvancedItem[]|null */
     private ?array $advancedItems = null;
@@ -91,6 +92,16 @@ class PushNotificationBuilder
         return $return;
     }
 
+    public function withCustomDeepLink(string $key, $value): self
+    {
+        $return = clone $this;
+        if($return->customDeepLinks === null){
+            $return->customDeepLinks = [];
+        }
+        $return->customDeepLinks[$key] = $value;
+        return $return;
+    }
+
     public function withAdvancedItems(PushNotificationAdvancedType $advancedType, array $advancedItems): self
     {
         $return = clone $this;
@@ -130,7 +141,8 @@ class PushNotificationBuilder
             $this->deepLink,
             $this->badgeCount,
             $this->advancedType,
-            $this->advancedItems
+            $this->advancedItems,
+            $this->customDeepLinks
         );
     }
 }
