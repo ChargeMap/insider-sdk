@@ -20,8 +20,9 @@ class PushNotification implements JsonSerializable
     private ?string $deepLink;
     private ?int $badgeCount;
     private ?PushNotificationAdvancedType $advancedType;
-    /** @var PushNotificationAdvancedItem[]|null  */
+    /** @var PushNotificationAdvancedItem[]|null */
     private ?array $advancedItems;
+    /** @var array<string,mixed>|null */
     private ?array $customDeepLinks;
 
     public function __construct(
@@ -112,6 +113,7 @@ class PushNotification implements JsonSerializable
         return $this->advancedItems;
     }
 
+    /** @return array<string,mixed>|null */
     public function getCustomDeepLinks(): ?array
     {
         return $this->customDeepLinks;
@@ -155,14 +157,14 @@ class PushNotification implements JsonSerializable
             $return['ios']['deep_link']['deep_ios'] = $this->deepLink;
         }
 
-        if($this->customDeepLinks !== null){
-            foreach ($this->customDeepLinks as $key => $value){
+        if ($this->customDeepLinks !== null) {
+            foreach ($this->customDeepLinks as $key => $value) {
                 $return['android']['deep_link'][$key] = $value;
                 $return['ios']['deep_link'][$key] = $value;
             }
         }
 
-        if($this->advancedType !== null && $this->advancedItems !== null) {
+        if ($this->advancedType !== null && $this->advancedItems !== null) {
             $return['advanced_push_payload'] = [
                 'advanced_push_type' => strtolower($this->advancedType->getValue()),
                 'advanced_push_items' => $this->advancedItems,

@@ -19,6 +19,7 @@ class PushNotificationBuilder
     private ?string $deepLink = null;
     private ?int $badgeCount = null;
     private ?PushNotificationAdvancedType $advancedType = null;
+    /** @var array<string,mixed>|null  */
     private ?array $customDeepLinks = null;
 
     /** @var PushNotificationAdvancedItem[]|null */
@@ -92,6 +93,7 @@ class PushNotificationBuilder
         return $return;
     }
 
+    /** @param mixed $value */
     public function withCustomDeepLink(string $key, $value): self
     {
         $return = clone $this;
