@@ -57,6 +57,8 @@ class PushNotificationBuilderTest extends TestCase
                     ),
                 ]
             )
+            ->withCustomDeepLink("user_id", 1)
+            ->withCustomDeepLink("grade", "advanced")
             ->build();
 
         TestCase::assertSame($data['identifiers']['uuid'], $notification->getUserIdentifiers()->getUuid());
@@ -76,6 +78,7 @@ class PushNotificationBuilderTest extends TestCase
         TestCase::assertSame($data['advanced_items'][0]['headline'], $notification->getAdvancedItems()[0]->getHeadline());
         TestCase::assertSame($data['advanced_items'][0]['image_url'], $notification->getAdvancedItems()[0]->getImageUrl());
         TestCase::assertSame($data['advanced_items'][0]['deep_link_data'], $notification->getAdvancedItems()[0]->getDeepLinkData());
+        TestCase::assertSame($data['custom_deep_links'], $notification->getCustomDeepLinks());
     }
 
     public function testBuildShouldThrowMissingRequiredProperties(): void

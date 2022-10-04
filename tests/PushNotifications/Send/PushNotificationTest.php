@@ -45,6 +45,7 @@ class PushNotificationTest extends TestCase
         TestCase::assertSame($data['advanced_items'][0]['headline'], $notification->getAdvancedItems()[0]->getHeadline());
         TestCase::assertSame($data['advanced_items'][0]['image_url'], $notification->getAdvancedItems()[0]->getImageUrl());
         TestCase::assertSame($data['advanced_items'][0]['deep_link_data'], $notification->getAdvancedItems()[0]->getDeepLinkData());
+        TestCase::assertSame($data['custom_deep_links'], $notification->getCustomDeepLinks());
     }
 
     /**
@@ -66,6 +67,10 @@ class PushNotificationTest extends TestCase
             'ttl' => PushNotificationTtl::ONE_AND_A_HALF_DAY(),
             'image_url' => 'https://www.chargemap.com/image.jpg',
             'deep_link' => 'deep-link',
+            'custom_deep_links' => [
+                'user_id' => 1,
+                'grade' => 'advanced'
+            ],
             'badge_count' => 2,
             'advanced_type' => PushNotificationAdvancedType::SLIDER(),
             'advanced_items' => [
@@ -103,7 +108,8 @@ class PushNotificationTest extends TestCase
                     $data['advanced_items'][0]['image_url'],
                     $data['advanced_items'][0]['deep_link_data'],
                 )
-            ]
+            ],
+            $data['custom_deep_links']
         );
 
         return [$data, $notification];
@@ -140,6 +146,8 @@ class PushNotificationTest extends TestCase
                     'sound' => 'sound_check',
                     'deep_link' => [
                         'deep_android' => $data['deep_link'],
+                        'user_id' => $data['custom_deep_links']['user_id'],
+                        'grade' => $data['custom_deep_links']['grade'],
                     ]
                 ],
                 'ios' => [
@@ -149,6 +157,8 @@ class PushNotificationTest extends TestCase
                     'badge' => $data['badge_count'],
                     'deep_link' => [
                         'deep_ios' => $data['deep_link'],
+                        'user_id' => $data['custom_deep_links']['user_id'],
+                        'grade' => $data['custom_deep_links']['grade'],
                     ],
                 ],
                 'image_url' => $data['image_url'],
