@@ -4,10 +4,7 @@ jobs:
   default:
     runs-on: ubuntu-latest
     container:
-      image: hebabil/php-7.4-cli
-      credentials:
-        username: ${{ secrets.DOCKER_HUB_USERNAME }}
-        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+      image: php:7.4-cli
     steps:
       - name: Checkout
         uses: actions/checkout@v2
