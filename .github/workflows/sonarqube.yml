@@ -16,8 +16,8 @@ jobs:
           configuration: phpunit.xml
           args: --coverage-clover=coverage.xml --log-junit=testresults.xml
           php_version: "7.4"
-#      - name: Fix code coverage paths
-#        run: sed -i 's@'$GITHUB_WORKSPACE'@/github/workspace/@g' coverage.xml
+      - name: Fix code coverage paths
+        run: sed -i 's@'$GITHUB_WORKSPACE'@/github/workspace/@g' coverage.xml
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@master
         env:
