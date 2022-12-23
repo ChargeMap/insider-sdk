@@ -2,9 +2,9 @@ name: SonarQube Scan
 on: push
 jobs:
   default:
-    runs-on: ubuntu-latest
-    container:
-      image: php:7.4-cli
+    runs:
+      using: 'docker'
+      image: '../../.docker/Dockerfile'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
