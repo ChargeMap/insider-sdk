@@ -52,28 +52,28 @@ class UserTest extends TestCase
             ]
         );
 
-        $attributes = new Attributes(
-            'example@example.com',
-            '+3312345678',
-            true,
-            false,
-            true,
-            'Some Name',
-            'Some Surname',
-            new DateTime('2022-12-18T09:12:35'),
-            'Female',
-            'EN',
-            'UK',
-            'London',
-        );
-        foreach ([1, 2, 3] as $i) {
-            $attributes = $attributes->withListId($i);
+        $attributes = Attributes::builder()
+            ->withEmail('example@example.com')
+            ->withPhoneNumber('+3312345678')
+            ->withEmailOptin(true)
+            ->withGdprOptin(false)
+            ->withSmsOptin(true)
+            ->withName('Some Name')
+            ->withSurname('Some Surname')
+            ->withBirthday(new DateTime('2022-12-18T09:12:35'))
+            ->withGender('Female')
+            ->withLanguage('EN')
+            ->withCountry('UK')
+            ->withCity('London');
+
+        foreach ([1, 2, 3] as $listId) {
+            $attributes = $attributes->withAddedListId($listId);
         }
         foreach (['key' => 'value', 'key2' => 'value2'] as $key => $value) {
-            $attributes = $attributes->withCustomAttribute($key, $value);
+            $attributes = $attributes->withAddedCustomAttribute($key, $value);
         }
-        $user = new User($identifiers, $attributes);
 
+        $user = new User($identifiers, $attributes);
         $events = [$this->getEvent(), $this->getEvent()];
 
         foreach ($events as $event) {
