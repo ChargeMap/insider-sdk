@@ -13,7 +13,7 @@ class Attributes implements JsonSerializable
     private ?string $email;
     private ?string $phoneNumber;
     private ?bool $emailOptin;
-    private ?bool $gdrOptin;
+    private ?bool $gdprOptin;
     private ?bool $smsOptin;
     private ?string $name;
     private ?string $surname;
@@ -31,7 +31,7 @@ class Attributes implements JsonSerializable
         ?string            $email = null,
         ?string            $phoneNumber = null,
         ?bool              $emailOptin = null,
-        ?bool              $gdrOptin = null,
+        ?bool              $gdprOptin = null,
         ?bool              $smsOptin = null,
         ?string            $name = null,
         ?string            $surname = null,
@@ -45,7 +45,7 @@ class Attributes implements JsonSerializable
         $this->email = $email;
         $this->phoneNumber = $phoneNumber;
         $this->emailOptin = $emailOptin;
-        $this->gdrOptin = $gdrOptin;
+        $this->gdprOptin = $gdprOptin;
         $this->smsOptin = $smsOptin;
         $this->name = $name;
         $this->surname = $surname;
@@ -89,9 +89,9 @@ class Attributes implements JsonSerializable
         return $this->emailOptin;
     }
 
-    public function getGdrOptin(): ?bool
+    public function getGdprOptin(): ?bool
     {
-        return $this->gdrOptin;
+        return $this->gdprOptin;
     }
 
     public function getSmsOptin(): ?bool
@@ -162,8 +162,8 @@ class Attributes implements JsonSerializable
         if ($this->emailOptin !== null) {
             $return['email_optin'] = $this->emailOptin;
         }
-        if ($this->gdrOptin !== null) {
-            $return['gdr_optin'] = $this->gdrOptin;
+        if ($this->gdprOptin !== null) {
+            $return['gdpr_optin'] = $this->gdprOptin;
         }
         if ($this->smsOptin !== null) {
             $return['sms_optin'] = $this->smsOptin;

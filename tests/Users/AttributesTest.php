@@ -18,7 +18,7 @@ class AttributesTest extends TestCase
         $email = 'example@example.com';
         $phoneNumber = '+3312345678';
         $emailOptin = true;
-        $gdrOptin = false;
+        $gdprOptin = false;
         $smsOptin = true;
         $name = 'Some Name';
         $surname = 'Some Surname';
@@ -31,7 +31,7 @@ class AttributesTest extends TestCase
             $email,
             $phoneNumber,
             $emailOptin,
-            $gdrOptin,
+            $gdprOptin,
             $smsOptin,
             $name,
             $surname,
@@ -44,7 +44,7 @@ class AttributesTest extends TestCase
         $this->assertSame($email, $attributes->getEmail());
         $this->assertSame($phoneNumber, $attributes->getPhoneNumber());
         $this->assertSame($emailOptin, $attributes->getEmailOptin());
-        $this->assertSame($gdrOptin, $attributes->getGdrOptin());
+        $this->assertSame($gdprOptin, $attributes->getGdprOptin());
         $this->assertSame($smsOptin, $attributes->getSmsOptin());
         $this->assertSame($name, $attributes->getName());
         $this->assertSame($surname, $attributes->getSurname());
@@ -75,7 +75,7 @@ class AttributesTest extends TestCase
         $email = 'example@example.com';
         $phoneNumber = '+3312345678';
         $emailOptin = true;
-        $gdrOptin = false;
+        $gdprOptin = false;
         $smsOptin = true;
         $name = 'Some Name';
         $surname = 'Some Surname';
@@ -92,7 +92,7 @@ class AttributesTest extends TestCase
             $email,
             $phoneNumber,
             $emailOptin,
-            $gdrOptin,
+            $gdprOptin,
             $smsOptin,
             $name,
             $surname,
@@ -113,7 +113,7 @@ class AttributesTest extends TestCase
             'email' => $email,
             'phone_number' => $phoneNumber,
             'email_optin' => $emailOptin,
-            'gdr_optin' => $gdrOptin,
+            'gdpr_optin' => $gdprOptin,
             'sms_optin' => $smsOptin,
             'name' => $name,
             'surname' => $surname,
