@@ -155,7 +155,7 @@ class AttributesTest extends TestCase
             'surname' => $surname,
             'gender' => $gender,
             'country' => $country,
-            'list_id' => $listId,
+            'list_id' => $listIds,
         ]), json_encode($attributes));
     }
 }
