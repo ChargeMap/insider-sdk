@@ -27,20 +27,23 @@ class AttributesTest extends TestCase
         $language = 'EN';
         $country = 'UK';
         $city = 'London';
-        $attributes = new Attributes(
-            $email,
-            $phoneNumber,
-            $emailOptin,
-            $gdprOptin,
-            $smsOptin,
-            $name,
-            $surname,
-            $birthday,
-            $gender,
-            $language,
-            $country,
-            $city,
-        );
+        $listIds = [1, 2, 3];
+        $customAttributes = ['key' => 'value'];
+
+        $attributes = Attributes::builder()
+            ->withEmail($email)
+            ->withPhoneNumber($phoneNumber)
+            ->withEmailOptin($emailOptin)
+            ->withGdprOptin($gdprOptin)
+            ->withSmsOptin($smsOptin)
+            ->withName($name)
+            ->withSurname($surname)
+            ->withBirthday($birthday)
+            ->withGender($gender)
+            ->withLanguage($language)
+            ->withCountry($country)
+            ->withCity($city);
+
         $this->assertSame($email, $attributes->getEmail());
         $this->assertSame($phoneNumber, $attributes->getPhoneNumber());
         $this->assertSame($emailOptin, $attributes->getEmailOptin());
@@ -53,21 +56,18 @@ class AttributesTest extends TestCase
         $this->assertSame($language, $attributes->getLanguage());
         $this->assertSame($country, $attributes->getCountry());
         $this->assertSame($city, $attributes->getCity());
-        $this->assertNull($attributes->getListId());
-        $this->assertNull($attributes->getCustom());
-        $listId = [1, 2, 3];
-        $custom = [
-            'key' => 'value'
-        ];
-        foreach ($listId as $i) {
-            $attributes = $attributes->withListId($i);
+        $this->assertNull($attributes->getListIds());
+        $this->assertNull($attributes->getCustomAttributes());
+
+        foreach ($listIds as $listId) {
+            $attributes = $attributes->withAddedListId($listId);
         }
-        foreach ($custom as $key => $value) {
-            $attributes = $attributes->withCustomAttribute($key, $value);
+        foreach ($customAttributes as $key => $value) {
+            $attributes = $attributes->withAddedCustomAttribute($key, $value);
         }
 
-        $this->assertSame($listId, $attributes->getListId());
-        $this->assertSame($custom, $attributes->getCustom());
+        $this->assertSame($listIds, $attributes->getListIds());
+        $this->assertSame($customAttributes, $attributes->getCustomAttributes());
     }
 
     public function testJsonSerializeWithAllParameters(): void
@@ -84,29 +84,28 @@ class AttributesTest extends TestCase
         $language = 'EN';
         $country = 'UK';
         $city = 'London';
-        $listId = [1, 2, 3];
-        $custom = [
-            'key' => 'value'
-        ];
-        $attributes = new Attributes(
-            $email,
-            $phoneNumber,
-            $emailOptin,
-            $gdprOptin,
-            $smsOptin,
-            $name,
-            $surname,
-            $birthday,
-            $gender,
-            $language,
-            $country,
-            $city,
-        );
-        foreach ($listId as $i) {
-            $attributes = $attributes->withListId($i);
+        $listIds = [1, 2, 3];
+        $customAttributes = ['key' => 'value'];
+
+        $attributes = Attributes::builder()
+            ->withEmail($email)
+            ->withPhoneNumber($phoneNumber)
+            ->withEmailOptin($emailOptin)
+            ->withGdprOptin($gdprOptin)
+            ->withSmsOptin($smsOptin)
+            ->withName($name)
+            ->withSurname($surname)
+            ->withBirthday($birthday)
+            ->withGender($gender)
+            ->withLanguage($language)
+            ->withCountry($country)
+            ->withCity($city);
+
+        foreach ($listIds as $listId) {
+            $attributes = $attributes->withAddedListId($listId);
         }
-        foreach ($custom as $key => $value) {
-            $attributes = $attributes->withCustomAttribute($key, $value);
+        foreach ($customAttributes as $key => $value) {
+            $attributes = $attributes->withAddedCustomAttribute($key, $value);
         }
 
         $this->assertSame(json_encode([
@@ -122,8 +121,8 @@ class AttributesTest extends TestCase
             'language' => $language,
             'country' => $country,
             'city' => $city,
-            'list_id' => $listId,
-            'custom' => $custom
+            'list_id' => $listIds,
+            'custom' => $customAttributes
         ]), json_encode($attributes));
     }
 
@@ -135,23 +134,18 @@ class AttributesTest extends TestCase
         $surname = 'Some Surname';
         $gender = 'Female';
         $country = 'UK';
-        $listId = [1, 2, 3];
-        $attributes = new Attributes(
-            $email,
-            null,
-            $emailOptin,
-            null,
-            $smsOptin,
-            null,
-            $surname,
-            null,
-            $gender,
-            null,
-            $country,
-            null,
-        );
-        foreach ($listId as $i) {
-            $attributes = $attributes->withListId($i);
+        $listIds = [1, 2, 3];
+
+        $attributes = Attributes::builder()
+            ->withEmail($email)
+            ->withEmailOptin($emailOptin)
+            ->withSmsOptin($smsOptin)
+            ->withSurname($surname)
+            ->withGender($gender)
+            ->withCountry($country);
+
+        foreach ($listIds as $listId) {
+            $attributes = $attributes->withAddedListId($listId);
         }
 
         $this->assertSame(json_encode([
