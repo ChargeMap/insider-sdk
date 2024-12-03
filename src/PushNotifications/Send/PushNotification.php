@@ -153,8 +153,8 @@ class PushNotification implements JsonSerializable
         }
 
         if ($this->deepLink !== null) {
-            $return['android']['deep_link']['deep_android'] = $this->deepLink;
-            $return['ios']['deep_link']['deep_ios'] = $this->deepLink;
+            $return['android']['deep_link']['ins_dl_url_scheme'] = $this->deepLink;
+            $return['ios']['deep_link']['ins_dl_url_scheme'] = $this->deepLink;
         }
 
         if ($this->customDeepLinks !== null) {

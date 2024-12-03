@@ -145,7 +145,7 @@ class PushNotificationTest extends TestCase
                     'thread-id' => 1,
                     'sound' => 'sound_check',
                     'deep_link' => [
-                        'deep_android' => $data['deep_link'],
+                        'ins_dl_url_scheme' => $data['deep_link'],
                         'user_id' => $data['custom_deep_links']['user_id'],
                         'grade' => $data['custom_deep_links']['grade'],
                     ]
@@ -156,7 +156,7 @@ class PushNotificationTest extends TestCase
                     'sound' => 'sound_check',
                     'badge' => $data['badge_count'],
                     'deep_link' => [
-                        'deep_ios' => $data['deep_link'],
+                        'ins_dl_url_scheme' => $data['deep_link'],
                         'user_id' => $data['custom_deep_links']['user_id'],
                         'grade' => $data['custom_deep_links']['grade'],
                     ],
